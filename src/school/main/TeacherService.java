@@ -88,8 +88,11 @@ public class TeacherService {
         return sum / count;
     }
 
-    public Map<TeacherType,List<Teacher>> moreThanTenYearsExperience(){
+    public Map<TeacherType,List<Teacher>> tenYearsExperienceList(){
       return  teacherList.stream().filter(teacher-> teacher.getExperienceYear() ==10)
                 .collect(Collectors.groupingBy(Teacher::getType));
     }
+
+    public List<PartTimeTeacher>
+
 }
