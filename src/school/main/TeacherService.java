@@ -2,6 +2,7 @@ package school.main;
 
 import school.*;
 import school.enums.Degree;
+import school.enums.TeacherType;
 
 import java.util.*;
 
@@ -42,6 +43,7 @@ public class TeacherService {
         return schools.stream().filter(school -> school.getName().equalsIgnoreCase(name)).findAny();
 
     }
+
     public Optional<Course> findCourseByName(String name) {
         return courses.stream().filter(course -> course.getName().equalsIgnoreCase(name)).findAny();
 
@@ -54,30 +56,35 @@ public class TeacherService {
         if (teacher.isPresent() && school.isPresent()) {
             if (!(teacher.get().getSchool().contains(school.get()))) {
                 teacher.get().addSchool(school.get());
-            }
-            else {
+            } else {
                 throw new RuntimeException("school is duplicate in teacher list");
             }
-        }else {
+        } else {
             throw new RuntimeException("teacher or school name is wrong");
         }
     }
 
-    public void addNewCourse(String personalCode, String name){
+    public void addNewCourse(String personalCode, String name) {
         Optional<Teacher> teacher = findByPersonalCode(personalCode);
         Optional<Course> course = findCourseByName(name);
         if (teacher.isPresent() && course.isPresent()) {
-            if (!(teacher.get().getCourse().contains(course.get()))){
+            if (!(teacher.get().getCourse().contains(course.get()))) {
                 teacher.get().addCourse(course.get());
-            }
-            else {
+            } else {
                 throw new RuntimeException("Course is duplicate in teacher list");
             }
-        }else {
+        } else {
             throw new RuntimeException("teacher or course name is wrong");
         }
     }
 
+    public Double calculateAverageSalary() {
+        Double sum = teacherList.stream().filter(teacher -> teacher.getType().equals(TeacherType.FULL_TIME))
+                .map(i -> i.calculateSalary()).reduce(0D, Double::sum);
+        int count = (int) teacherList.stream().filter(teacher -> teacher.getType()
+                .equals(TeacherType.FULL_TIME)).count();
 
+        return sum / count;
+    }
 
 }
