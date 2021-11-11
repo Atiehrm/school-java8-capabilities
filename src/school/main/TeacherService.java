@@ -93,6 +93,14 @@ public class TeacherService {
                 .collect(Collectors.groupingBy(Teacher::getType));
     }
 
-    public List<PartTimeTeacher>
+    public List<Teacher> partTimesWithMoreThan2CourseAndBsDegree(){
+        return teacherList.stream().filter(teacher -> teacher.getDegree().equals(TeacherType.PART_TIME))
+                .filter(teacher -> teacher.getDegree().equals(Degree.BS))
+                .filter(teacher -> teacher.getSchool().stream().anyMatch(school -> school.getDegree()>=2))
+                .collect(Collectors.toList());
+        //aval mikhastam parttime teacher bargardunam ama nashod return konam pas kardamesh teacher
+        //baraye degree school khastam az filter estefade konam khatadad az anymatch estefade kardam
+    }
+    
 
 }
