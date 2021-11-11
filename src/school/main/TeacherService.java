@@ -42,6 +42,10 @@ public class TeacherService {
         return schools.stream().filter(school -> school.getName().equalsIgnoreCase(name)).findAny();
 
     }
+    public Optional<Course> findCourseByName(String name) {
+        return courses.stream().filter(course -> course.getName().equalsIgnoreCase(name)).findAny();
+
+    }
 
     public void addNewSchool(String personalCode, String name) {
         Optional<Teacher> teacher = findByPersonalCode(personalCode);
@@ -56,6 +60,21 @@ public class TeacherService {
             }
         }else {
             throw new RuntimeException("teacher or school name is wrong");
+        }
+    }
+
+    public void addNewCourse(String personalCode, String name){
+        Optional<Teacher> teacher = findByPersonalCode(personalCode);
+        Optional<Course> course = findCourseByName(name);
+        if (teacher.isPresent() && course.isPresent()) {
+            if (!(teacher.get().getCourse().contains(course))){
+                teacher.get().addCourse(course.get());
+            }
+            else {
+                throw new RuntimeException("Course is duplicate in teacher list");
+            }
+        }else {
+            throw new RuntimeException("teacher or course name is wrong");
         }
     }
 }

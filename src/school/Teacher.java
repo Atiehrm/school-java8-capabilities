@@ -152,4 +152,8 @@ public abstract class Teacher {
     public void addSchool(School school){
         this.getSchool().add(school);
     }
+
+    public void addCourse(Course course){
+        this.getCourse().add(course);
+    }
 }
