@@ -2,6 +2,9 @@ package school.main;
 
 import school.Course;
 import school.School;
+import school.Teacher;
+
+import java.util.List;
 
 public class Main {
     private static final TeacherService teacherService = new TeacherService();
@@ -34,6 +37,66 @@ public class Main {
         teacherService.schools.add(school4);
         teacherService.schools.add(school5);
 
+        List<Teacher> teachers = teacherService.getTeacherList();
+
+        try {
+            teacherService.addNewSchool(teachers.get(0).getPersonalNumber(), school.getName());
+            teacherService.addNewSchool(teachers.get(4).getPersonalNumber(), school.getName());
+            teacherService.addNewSchool(teachers.get(4).getPersonalNumber(), school1.getName());
+            teacherService.addNewSchool(teachers.get(4).getPersonalNumber(), school4.getName());
+            teacherService.addNewSchool(teachers.get(5).getPersonalNumber(), school2.getName());
+            teacherService.addNewSchool(teachers.get(0).getPersonalNumber(), school2.getName());
+            teacherService.addNewSchool(teachers.get(0).getPersonalNumber(), school3.getName());
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+
+        System.out.println("schools added by teacher " + teachers.get(0).getLastName() + ":\n" +
+                teachers.get(0).getSchool());
+        System.out.println("******************************************8");
+        System.out.println("schools added by teacher " + teachers.get(4).getLastName() + ":\n" +
+                teachers.get(4).getSchool());
+        System.out.println("******************************************8");
+
+        System.out.println("schools added by teacher " + teachers.get(5).getLastName() + ":\n" +
+                teachers.get(5).getSchool());
+        System.out.println("******************************************8");
+
+
+        try {
+            teacherService.addNewCourse(teachers.get(0).getPersonalNumber(), course.getName());
+            teacherService.addNewCourse(teachers.get(4).getPersonalNumber(), course.getName());
+            teacherService.addNewCourse(teachers.get(4).getPersonalNumber(), course1.getName());
+            teacherService.addNewCourse(teachers.get(4).getPersonalNumber(), course4.getName());
+            teacherService.addNewCourse(teachers.get(5).getPersonalNumber(), course2.getName());
+            teacherService.addNewCourse(teachers.get(0).getPersonalNumber(), course2.getName());
+            teacherService.addNewCourse(teachers.get(0).getPersonalNumber(), course3.getName());
+        } catch (Exception e) {
+            System.out.println(e.getLocalizedMessage());
+        }
+
+        System.out.println("courses added by teacher " + teachers.get(0).getLastName() + ":\n" +
+                teachers.get(0).getCourse());
+        System.out.println("******************************************8");
+        System.out.println("courses added by teacher " + teachers.get(4).getLastName() + ":\n" +
+                teachers.get(4).getCourse());
+        System.out.println("******************************************8");
+        System.out.println("courses added by teacher " + teachers.get(5).getLastName() + ":\n" +
+                teachers.get(5).getCourse());
+        System.out.println("******************************************8");
+
+
+        System.out.println(" average Salary: " + teacherService.calculateAverageSalary());
+        System.out.println("******************************************8");
+
+        teacherService.tenYearsExperienceMap().entrySet().stream().forEach(System.out::println);
+        System.out.println("******************************************8");
+
+        teacherService.partTimesWithMoreThan2CourseAndBsDegree().forEach(System.out::println);
+        System.out.println("******************************************8");
+        teacherService.schoolNamesSetInSystem().stream().forEach(System.out::println);
+        System.out.println("******************************************8");
+        teacherService.schoolNameMapTeachers().entrySet().stream().forEach(System.out::println);
     }
 
 

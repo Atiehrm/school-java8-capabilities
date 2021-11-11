@@ -1,17 +1,22 @@
 package school.main;
 
+import lombok.Getter;
+import lombok.Setter;
 import school.*;
 import school.enums.Degree;
 import school.enums.TeacherType;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
+@Getter @Setter
 public class TeacherService {
     List<Teacher> teacherList = new ArrayList<>();
     List<School> schools = new ArrayList<>();
     List<Course> courses = new ArrayList<>();
 
+    public List<Teacher> getTeacherList() {
+        return teacherList;
+    }
 
     public TeacherService() {
         teacherList.add(new FullTimeTeacher("mina", "minayi", "0015512131",
