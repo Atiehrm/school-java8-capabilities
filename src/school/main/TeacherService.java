@@ -5,6 +5,7 @@ import school.enums.Degree;
 import school.enums.TeacherType;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class TeacherService {
     List<Teacher> teacherList = new ArrayList<>();
@@ -14,7 +15,7 @@ public class TeacherService {
 
     public TeacherService() {
         teacherList.add(new FullTimeTeacher("mina", "minayi", "0015512131",
-                Degree.PHD, new HashSet<>(), 15, new HashSet<>(), 46, 10000000));
+                Degree.PHD, new HashSet<>(), 10, new HashSet<>(), 46, 10000000));
         teacherList.add(new FullTimeTeacher("ali", "safarzade", "0019922131",
                 Degree.BS, new HashSet<>(), 3, new HashSet<>(), 27, 4000000));
 
@@ -24,7 +25,7 @@ public class TeacherService {
                 Degree.PHD, new HashSet<>(), 25, new HashSet<>(), 60, 13000000));
 
         teacherList.add(new PartTimeTeacher("reza", "molayi", "0098712131",
-                Degree.PHD, new HashSet<>(), 9, new HashSet<>(), 36, 56, 500000));
+                Degree.PHD, new HashSet<>(), 10, new HashSet<>(), 36, 56, 500000));
 
         teacherList.add(new PartTimeTeacher("maryam", "vahidi", "0298772431",
                 Degree.MA, new HashSet<>(), 4, new HashSet<>(), 29, 80, 200000));
@@ -87,4 +88,8 @@ public class TeacherService {
         return sum / count;
     }
 
+    public Map<TeacherType,List<Teacher>> moreThanTenYearsExperience(){
+      return  teacherList.stream().filter(teacher-> teacher.getExperienceYear() ==10)
+                .collect(Collectors.groupingBy(Teacher::getType));
+    }
 }
