@@ -52,7 +52,7 @@ public class TeacherService {
         Optional<School> school = findSchoolByName(name);
 
         if (teacher.isPresent() && school.isPresent()) {
-            if (!(teacher.get().getSchool().contains(school))) {
+            if (!(teacher.get().getSchool().contains(school.get()))) {
                 teacher.get().addSchool(school.get());
             }
             else {
@@ -67,7 +67,7 @@ public class TeacherService {
         Optional<Teacher> teacher = findByPersonalCode(personalCode);
         Optional<Course> course = findCourseByName(name);
         if (teacher.isPresent() && course.isPresent()) {
-            if (!(teacher.get().getCourse().contains(course))){
+            if (!(teacher.get().getCourse().contains(course.get()))){
                 teacher.get().addCourse(course.get());
             }
             else {
@@ -77,4 +77,7 @@ public class TeacherService {
             throw new RuntimeException("teacher or course name is wrong");
         }
     }
+
+
+
 }
