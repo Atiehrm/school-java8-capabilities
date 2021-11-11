@@ -88,19 +88,32 @@ public class TeacherService {
         return sum / count;
     }
 
-    public Map<TeacherType,List<Teacher>> tenYearsExperienceList(){
-      return  teacherList.stream().filter(teacher-> teacher.getExperienceYear() ==10)
+    public Map<TeacherType, List<Teacher>> tenYearsExperienceMap() {
+        return teacherList.stream().filter(teacher -> teacher.getExperienceYear() == 10)
                 .collect(Collectors.groupingBy(Teacher::getType));
     }
 
-    public List<Teacher> partTimesWithMoreThan2CourseAndBsDegree(){
+    public List<Teacher> partTimesWithMoreThan2CourseAndBsDegree() {
         return teacherList.stream().filter(teacher -> teacher.getDegree().equals(TeacherType.PART_TIME))
                 .filter(teacher -> teacher.getDegree().equals(Degree.BS))
-                .filter(teacher -> teacher.getSchool().stream().anyMatch(school -> school.getDegree()>=2))
+                .filter(teacher -> teacher.getSchool().stream().anyMatch(school -> school.getDegree() >= 2))
                 .collect(Collectors.toList());
         //aval mikhastam parttime teacher bargardunam ama nashod return konam pas kardamesh teacher
         //baraye degree school khastam az filter estefade konam khatadad az anymatch estefade kardam
     }
-    
 
+    public Set<String> schoolNamesSetInSystem() {
+        return teacherList.stream().filter(t -> !t.getSchool().isEmpty())
+                .map(t -> t.getSchool().toString()).collect(Collectors.toSet());
+    }
+
+    public Map<String, List<Teacher>> schoolNameMapTeachers() {
+        Map<String, List<Teacher>> resultMap = new HashMap<>();
+        schools.forEach(school -> {
+            List<Teacher> schoolTeachers = teacherList.stream().filter(t ->
+                    t.getSchool().contains(school)).collect(Collectors.toList());
+            resultMap.put(school.getName(), schoolTeachers);
+        });
+        return resultMap;
+    }
 }
